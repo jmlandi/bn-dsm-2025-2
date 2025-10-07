@@ -5,7 +5,7 @@ const controller = {}
 
 controller.create = async function(req, res) {
   try {
-    await prisma.cliente.create({ data: req.body })
+    await prisma.pedido.create({ data: req.body })
     res.status(201).end()
   }
   catch(error) {
@@ -15,13 +15,13 @@ controller.create = async function(req, res) {
 }
 
 controller.retrieveAll = async function(req, res) {
-  
+
   const include = includeRelations(req.query);
 
   try {
-    const result = await prisma.cliente.findMany({
-      include,
-      orderBy: [ { nome: 'asc' }]
+    const result = await prisma.pedido.findMany({
+     include,
+      orderBy: [ { num_pedido: 'asc' }]
     })
     res.send(result)
   }
@@ -36,7 +36,7 @@ controller.retrieveOne = async function(req, res) {
   const include = includeRelations(req.query);
 
   try {
-    const result = await prisma.cliente.findUnique({
+    const result = await prisma.pedido.findUnique({
       include,
       where: { id: req.params.id }
     })
@@ -51,7 +51,7 @@ controller.retrieveOne = async function(req, res) {
 
 controller.update = async function(req, res) {
   try {
-    await prisma.cliente.update({
+    await prisma.pedido.update({
       where: { id: req.params.id },
       data: req.body
     })
@@ -70,7 +70,7 @@ controller.update = async function(req, res) {
 
 controller.delete = async function(req, res) {
   try {
-    await prisma.cliente.delete({
+    await prisma.pedido.delete({
       where: { id: req.params.id }
     })
     res.status(204).end()
